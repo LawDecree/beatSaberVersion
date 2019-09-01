@@ -2,10 +2,9 @@ const glob = require("glob");
 const fs = require("fs");
 const path = require("path");
 const { transInfo, transDifficultyInfo } = require("./utils");
-const pathDir20 = path.resolve(__dirname, "../demo/2.0");
-const pathDist = path.resolve(__dirname, "../dist/");
+const { pathOrigin, pathDist, originDir, distDir } = require('./constants');
 
-fs.readdir(pathDir20, (err, dirs) => {
+fs.readdir(pathOrigin, (err, dirs) => {
   dirs.forEach(dir => {
     fs.exists(path.resolve(pathDist, dir), exists => {
       if (!exists) {
@@ -13,18 +12,18 @@ fs.readdir(pathDir20, (err, dirs) => {
           if (err) console.log(err);
         });
       } else {
-        glob(path.resolve(pathDir20, dir, "*.jpg"), (err, files) => {
+        glob(path.resolve(pathOrigin, dir, "*.jpg"), (err, files) => {
           if (err) {
             console.log(err);
             return;
           }
           files.forEach(file => {
-            fs.copyFile(file, file.replace("demo/2.0", "dist"), err1 => {
+            fs.copyFile(file, file.replace(originDir, distDir), err1 => {
               if (err1) console.log(err1);
             });
           });
         });
-        glob(path.resolve(pathDir20, dir, "*.egg"), (err, files) => {
+        glob(path.resolve(pathOrigin, dir, "*.egg"), (err, files) => {
           if (err) {
             console.log(err);
             return;
@@ -32,7 +31,7 @@ fs.readdir(pathDir20, (err, dirs) => {
           files.forEach(file => {
             fs.copyFile(
               file,
-              file.replace("demo/2.0", "dist").replace(/\.egg$/, ".ogg"),
+              file.replace(originDir, distDir).replace(/\.egg$/, ".ogg"),
               err1 => {
                 if (err1) console.log(err1);
               }
@@ -41,7 +40,7 @@ fs.readdir(pathDir20, (err, dirs) => {
         });
 
         const infoString = fs.readFileSync(
-          path.resolve(pathDir20, dir, "info.dat"),
+          path.resolve(pathOrigin, dir, "info.dat"),
           "utf8"
         );
         const infoJson = JSON.parse(infoString);
@@ -53,7 +52,7 @@ fs.readdir(pathDir20, (err, dirs) => {
           }
         );
 
-        glob(path.resolve(pathDir20, dir, "*.dat"), (err, files) => {
+        glob(path.resolve(pathOrigin, dir, "*.dat"), (err, files) => {
           if (err) {
             console.log(err);
             return;
@@ -62,7 +61,7 @@ fs.readdir(pathDir20, (err, dirs) => {
             const data20 = JSON.parse(fs.readFileSync(file, "utf8"));
             if (!/info\.dat$/.test(file)) {
               fs.writeFile(
-                file.replace("demo/2.0", "dist").replace(/dat$/, "json"),
+                file.replace(originDir, distDir).replace(/dat$/, "json"),
                 JSON.stringify(transDifficultyInfo(data20, infoJson)),
                 err1 => {
                   if (err1) console.log(err1);

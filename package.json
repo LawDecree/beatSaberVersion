@@ -4,5 +4,12 @@
   "main": "index.js",
   "repository": "https://github.com/zhaolandelong/beatSaberVersion.git",
   "author": "zhaolandelong <zhaolandelong@bytedance.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "dependencies": {
+    "glob": "^7.1.4",
+    "lodash": "^4.17.15"
+  }
 }
