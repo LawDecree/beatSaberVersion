@@ -1,0 +1,8 @@
+{
+  "name": "beatSaberVersion",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/zhaolandelong/beatSaberVersion.git",
+  "author": "zhaolandelong <zhaolandelong@bytedance.com>",
+  "license": "MIT"
+}
