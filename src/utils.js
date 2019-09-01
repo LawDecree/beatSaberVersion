@@ -4,7 +4,7 @@ module.exports = {
   transInfo: info20 => {
     const difficultyLevels = _.get(
       info20,
-      "_difficultyBeatmapSets._difficultyBeatmaps",
+      "_difficultyBeatmapSets[0]._difficultyBeatmaps",
       []
     ).map(lvl => {
       return {
